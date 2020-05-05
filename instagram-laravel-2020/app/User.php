@@ -21,6 +21,18 @@ class User extends Authenticatable
         'name', 'email', 'username' ,  'password',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user){
+            $user->profile()->create([
+                //title sera username por default;
+                'title' => $user->username,
+            ]);
+        });
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -47,6 +59,8 @@ class User extends Authenticatable
 
     //Plural pois relação é 1:n  (Um usuario tem muitos posts, e um post possui apenas um usuario);
     public function posts(){
-        return $this->hasMany(Post::class);
+        //Tem muitos , ordenado de pela ordem de criação de forma decrescente, ou seja ira exbir
+        // os mais recentes primeiro.
+        return $this->hasMany(Post::class)->orderBy('created_at', 'DESC');
     }
 }

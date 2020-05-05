@@ -21,12 +21,22 @@
 </head>
 <body>
     <div id="app">
+
+        <!-- Cabeçalho dinamico presente em todas as páginas . -->
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
+
+                <!-- Logo + Titulo -->
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
+
+                    <!-- Logo do cabeçalho -->
                     <div><img src="/svg/laragram-logo.svg" style="height: 20px; border-right: 1px solid #333" alt="Logo" class="pr-3"></div>
+
+                    <!-- Título do cabeçalho -->
                     <div class="pl-3 pt-1">LaraGram</div>
                 </a>
+
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
