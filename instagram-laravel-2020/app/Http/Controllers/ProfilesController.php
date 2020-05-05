@@ -10,14 +10,13 @@ use Intervention\Image\Facades\Image;
 class ProfilesController extends Controller
 {
 
-    public function __construct(){
-
-
+    public function __construct()
+    {
     }
     //Exibe a view de profile do usuario
     public function index(\App\User $user)
     {
-     //   $user = User::findOrFail($user); === \App\User $user
+        //   $user = User::findOrFail($user); === \App\User $user
         return view('profiles.index', ['user' => $user]);
     }
 
@@ -31,7 +30,8 @@ class ProfilesController extends Controller
         return view('profiles.edit', compact('user', 'profile'));
     }
 
-    public function update(User $user){
+    public function update(User $user)
+    {
         $this->authorize('update', $user->profile);
 
         $validatedData = request()->validate([
@@ -39,20 +39,26 @@ class ProfilesController extends Controller
             'description' => ['required'],
             'url' => ['required'],
             'image' => '',
-         ]);
+        ]);
 
 
-         if(request('image')){
+        if (request('image')) {
             $imagePatch = request('image')->store('profile', 'public');
 
 
             //Redimensiona a imagem
             $img = Image::make(public_path("storage/{$imagePatch}"))->fit(1000, 1000);
             $img->save();
-         }
-         // auth() -> Verifica se o usuario atual está autenticado;
+            $imageArray  = ['image' => $imagePatch];
+        }
+        // auth() -> Verifica se o usuario atual está autenticado;
 
-         auth()->user()->profile->update(array_merge($validatedData, ['image' => $imagePatch]));
+
+        auth()->user()->profile->update(array_merge(
+            $validatedData,
+            $imageArray ?? [],  //Caso não tenha imagem, ira carregar um empyt array
+
+        ));
 
 
         return redirect("/profile/{$user->id}");

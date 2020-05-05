@@ -6,26 +6,22 @@
     <div class="row">
 
 
-        @if (!$user->profile->image)
-        <div class="col-3 p-5">
-            <img src=" https://uberinsta.com/images/default_avatar.jpg"
-            alt="User Profile picture" class="rounded-circle" style="max-height: 140px">
-        </div>
-        @else
+
 
         <!-- Foto de perfil do usuário -->
         <div class="col-3 p-5">
-            <img src="/storage/{{$user->profile->image}}"
+            <img src="{{$user->profile->profileImage()}}"
             alt="User Profile picture" class="rounded-circle" style="max-height: 140px">
         </div>
-        @endif
-
 
         <!-- Conteudos do perfil do usúario [nome, username, link, etc...]-->
         <div class="col-9 pt-5">
             <div class="d-flex justify-content-between align-items-center">
-                <h1>{{ $user->username }}</h1>
+                <div class="d-flex align-items-center ">
+                    <h1>{{ $user->username }}</h1>
 
+                    <follow-button></follow-button>
+                </div>
                 <!-- Verifica se o usúario está no mesmo perfil e pode adicionar um novo post -->
                 @can('update', $user->profile)
                 <a href="/p/create" class="pr-3">Add New Post</a>
