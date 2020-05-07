@@ -16,8 +16,18 @@ class ProfilesController extends Controller
     //Exibe a view de profile do usuario
     public function index(\App\User $user)
     {
+
+        $follows = false;
+
+        //Caso o usuario esteja logado e o usuario está seguindo ou não o perfil.
+        if(auth()->user() && auth()->user()->following->contains($user->id)){
+        $follows = true;
+        }
+
+
+
         //   $user = User::findOrFail($user); === \App\User $user
-        return view('profiles.index', ['user' => $user]);
+        return view('profiles.index', ['user' => $user, 'follows' => $follows]);
     }
 
     //Exibe a view de edição de profile

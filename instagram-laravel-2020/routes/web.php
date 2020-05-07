@@ -20,6 +20,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
+//Seguir alguém
+Route::post('follow/{user}', 'FollowsController@store' );
+
 //Rota para o Post (image+caption);
 Route::get('/p/create', 'PostsController@create');
 Route::post('/p', 'PostsController@store');

@@ -20,7 +20,7 @@
                 <div class="d-flex align-items-center ">
                     <h1>{{ $user->username }}</h1>
 
-                    <follow-button></follow-button>
+                <follow-button user-id="{{ $user->id }}" follows="{{ $follows }}"></follow-button>
                 </div>
                 <!-- Verifica se o usúario está no mesmo perfil e pode adicionar um novo post -->
                 @can('update', $user->profile)
@@ -43,8 +43,8 @@
 
             <div class="d-flex">
                 <div class="pr-3"><strong class="pr-1">{{ $user->posts->count() }}</strong>publicações</div>
-                <div class="pr-3"><strong class="pr-1">46,2mil</strong>seguidores</div>
-                <div class="pr-3"><strong class="pr-1">247</strong>seguindo</div>
+            <div class="pr-3"><strong class="pr-1">{{$user->profile->followers()->count() }}</strong>seguidores</div>
+            <div class="pr-3">seguindo <strong class="pr-1"> {{ $user->following()->count() }}</strong></div>
             </div>
             <div class="pt-4 font-weight-bold">{{ $user->profile->title }}</div>
             <div class=""> {{ $user->profile->description }} </div>
